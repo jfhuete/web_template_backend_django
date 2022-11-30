@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:13.6-alpine
+    container_name: novahack_db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    env_file:
+      - .env
+  api:
+    container_name: novahack_api
+    build:
+      context: ./
+      dockerfile: ./docker/api.dockerfile
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8080"]

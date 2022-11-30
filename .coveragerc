@@ -1,0 +1,15 @@
+[run]
+source = .
+
+[report]
+omit = */__init__.py
+    **/settings/*
+    test/*
+    manage.py
+    **/asgi.py
+    **/wsgi.py
+    .venv/*
+
+fail_under = 90
+show_missing = True
+sort = Cover
